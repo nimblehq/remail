@@ -1,5 +1,11 @@
+from remail.gdrive import Gdrive
+
+
 def main():
-    pass
+    gdrive = Gdrive()
+    release_folder_id = gdrive.get_release_folder()
+    beta_folder_id = gdrive.create_beta_folder(release_folder_id, 7)
+    link = gdrive.get_beta_folder_link(beta_folder_id)
 
 
 if __name__ == '__main__':
