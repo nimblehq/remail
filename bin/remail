@@ -1,4 +1,5 @@
 from remail.gdrive import Gdrive
+from remail.gmail import Gmail
 
 
 def main():
@@ -6,6 +7,8 @@ def main():
     release_folder_id = gdrive.get_release_folder()
     beta_folder_id = gdrive.create_beta_folder(release_folder_id, 7)
     link = gdrive.get_beta_folder_link(beta_folder_id)
+
+    Gmail().create_draft("jean.tadebois@gmail.com", "Test email", "The link to the folder is: %s" % link)
 
 
 if __name__ == '__main__':

@@ -8,6 +8,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 CREDENTIALS_JSON = '../remail/credentials.json'
 
+GMAIL_SCOPES = ['https://www.googleapis.com/auth/gmail.compose']
+GMAIL_PICKLE = '../remail/gmail.pickle'
+
 GDRIVE_SCOPES = ['https://www.googleapis.com/auth/drive']
 GDRIVE_PICKLE = '../remail/drive.pickle'
 
@@ -30,6 +33,10 @@ def get_credentials(scopes, pickle_file):
             pickle.dump(credentials, token)
 
     return credentials
+
+
+def get_gmail_credentials():
+    return get_credentials(GMAIL_SCOPES, GMAIL_PICKLE)
 
 
 def get_gdrive_credentials():
