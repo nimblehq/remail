@@ -1,0 +1,3 @@
+include remail/credentials.json
+include remail/drive.pickle
+include remail/gmail.pickle
