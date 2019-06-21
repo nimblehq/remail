@@ -3,12 +3,40 @@ from remail.gmail import Gmail
 
 
 def main():
+    version_name = '2.19.0'
+    version_code = '199'
+    beta = '8'
+
     gdrive = Gdrive()
     release_folder_id = gdrive.get_release_folder()
-    beta_folder_id = gdrive.create_beta_folder(release_folder_id, 7)
+    beta_folder_id = gdrive.create_beta_folder(release_folder_id, beta)
     link = gdrive.get_beta_folder_link(beta_folder_id)
 
-    Gmail().create_draft("jean.tadebois@gmail.com", "Test email", "The link to the folder is: %s" % link)
+    jira_query = 'https://jira.redplanethotels.com:8443/browse/AN-1810?jql=project%20%3D%20AN%20AND%20status%20%3D%20%22Ready%20for%20Testing%22%20AND%20fixVersion%20%3D%20%222.19.0%20Build%20197%20(Beta%206)%22%20ORDER%20BY%20priority%20DESC%2C%20updated%20DESC'
+    cc = 'Jai Govindani <jai@redplanethotels.com>, Developer <developer@redplanethotels.com>, redplanet@nimblehq.co, jinhan@redplanethotels.com'
+
+    html = """\
+Hi team,<br /><br />
+
+Following is the build to test this release version:<br />
+<b>- Fabric beta:</b><br />
+     RPH team: https://betas.to/QSssytU2<br />
+     Testlio team: https://betas.to/NrvVA9ZN<br />
+<b>- APKs:</b><a href="%s"> All APKs Folder</a><br />
+<b>- Strings changed:</b> Attached files<br /><br />
+
+While there are some improvements and bug fixes included, this Beta is to focus on testing the Loyalty Member Number analytics feature.<br /><br /> 
+
+Its ticket can be found at <a href="%s">%s Build %s (Beta %s)</a> on JIRA.<br /><br />
+
+Best Regards,<br />
+Jean Tadebois
+    """ % (link, jira_query, version_name, version_code, beta)
+
+    Gmail().create_html_draft('redplanethotels@testlio.com',
+                              cc,
+                              'Red Planet Android v%s Build %s (Beta %s)' % (version_name, version_code, beta),
+                              html)
 
 
 if __name__ == '__main__':
